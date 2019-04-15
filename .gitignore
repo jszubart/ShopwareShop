@@ -12,6 +12,7 @@ Thumbs.db
 
 # PhpStorm-Project
 /.idea/
+/custom/plugins/FroshProfiler
 
 # Composer
 /composer.phar
@@ -26,7 +27,7 @@ Thumbs.db
 /engine/Shopware/Plugins/Local/Core/*
 /engine/Shopware/Plugins/Local/Frontend/*
 
-/custom/plugins/*
+
 
 # User installed themes
 /themes/Frontend/*
