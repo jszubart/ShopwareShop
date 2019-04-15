@@ -75,5 +75,4 @@ class VirtuaFeaturedProducts extends Plugin
         $view->addTemplateDir($this->getPath() . '/Resources/views');
     }
 
-
 }
