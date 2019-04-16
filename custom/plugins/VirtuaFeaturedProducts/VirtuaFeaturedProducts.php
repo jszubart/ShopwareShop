@@ -25,6 +25,15 @@ class VirtuaFeaturedProducts extends Plugin
 
         ], null , false , false);
 
+        $service->update('s_articles_attributes', 'display_featured_products', 'boolean', [
+            'displayInBackend' => true,
+            'label' => 'Display Featured Product'
+        ], null , false , false);
+
+        $service->update('s_articles_attributes', 'number_of_products', 'integer', [
+            'displayInBackend' => true,
+            'label' => 'Number of products'
+        ], null , false , 3);
 
         $this->container->get('models')->generateAttributeModels(['s_articles_attributes']);
 
@@ -38,7 +47,6 @@ class VirtuaFeaturedProducts extends Plugin
      */
     public function uninstall(Plugin\Context\UninstallContext $uninstallContext)
     {
-
         if($uninstallContext->keepUserData()){
             return;
         }
@@ -53,7 +61,6 @@ class VirtuaFeaturedProducts extends Plugin
         $service->delete('s_articles_attributes','featured_product');
         $this->container->get('models')->generateAttributeModels(['s_articles_attributes']);
         $uninstallContext->scheduleClearCache(Plugin\Context\UninstallContext::CACHE_LIST_ALL);
-
     }
 
     /**
