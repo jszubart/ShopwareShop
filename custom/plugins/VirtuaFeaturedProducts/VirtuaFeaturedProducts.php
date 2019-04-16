@@ -22,21 +22,9 @@ class VirtuaFeaturedProducts extends Plugin
         $service->update('s_articles_attributes', 'is_featured', 'boolean', [
             'displayInBackend' => true,
             'label' => 'Featured Product'
-
         ], null , false , false);
-
-        $service->update('s_articles_attributes', 'display_featured_products', 'boolean', [
-            'displayInBackend' => true,
-            'label' => 'Display Featured Product'
-        ], null , false , false);
-
-        $service->update('s_articles_attributes', 'number_of_products', 'integer', [
-            'displayInBackend' => true,
-            'label' => 'Number of products'
-        ], null , false , 3);
 
         $this->container->get('models')->generateAttributeModels(['s_articles_attributes']);
-
         $installContext->scheduleClearCache(Plugin\Context\InstallContext::CACHE_LIST_ALL);
     }
 

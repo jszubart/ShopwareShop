@@ -3,13 +3,17 @@
         xsi:noNamespaceSchemaLocation="../../../../engine/Shopware/Components/Plugin/schema/config.xsd">
 
     <elements>
-        <element type="text">
-            <name>demoConfig</name>
-            <label lang="de">Demo Konfiguration</label>
-            <label lang="en">Demo configuration</label>
-            <value>Just a demo configuration, without any effects.</value>
-            <description lang="de">Nur ein hoffentlich hilfreicher Text.</description>
-            <description lang="en">Hopefully this text will help you.</description>
+        <element type="boolean">
+            <name>Display Featured Products</name>
+            <label lang="en">Display Featured Products</label>
+            <value>false</value>
+            <description lang="en">Displaying featured products on detail page</description>
+        </element>
+        <element type="number">
+            <name>Number of Products</name>
+            <label lang="en">Number of Products</label>
+            <value>3</value>
+            <description lang="en">Number of featured products on detail page</description>
         </element>
     </elements>
 
