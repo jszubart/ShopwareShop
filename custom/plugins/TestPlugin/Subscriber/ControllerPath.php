@@ -23,10 +23,9 @@ class ControllerPath implements SubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-                        'Enlight_Controller_Dispatcher_ControllerPath_Frontend_TestPlugin' => 'onGetControllerPathFrontend',        );
+            'Enlight_Controller_Dispatcher_ControllerPath_Frontend_TestPlugin' => 'onGetControllerPathFrontend'
+        );
     }
-
-
 
     /**
      * Register the frontend controller

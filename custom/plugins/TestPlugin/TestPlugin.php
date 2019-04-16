@@ -10,7 +10,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class TestPlugin extends Plugin
 {
-
     /**
     * @param ContainerBuilder $container
     */
@@ -19,5 +18,4 @@ class TestPlugin extends Plugin
         $container->setParameter('test_plugin.plugin_dir', $this->getPath());
         parent::build($container);
     }
-
 }

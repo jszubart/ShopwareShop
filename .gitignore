@@ -22,6 +22,9 @@ Thumbs.db
 /engine/Shopware/Plugins/Local/Backend/*
 /engine/Shopware/Plugins/Local/Core/*
 /engine/Shopware/Plugins/Local/Frontend/*
+
+/custom/plugins/FroshProfiler
+
 # User installed themes
 /themes/Frontend/*
 !/themes/Frontend/Bare
