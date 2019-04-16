@@ -40,13 +40,13 @@ class VirtuaFeaturedProducts extends Plugin
         }
 
         $service = $this->container->get('shopware_attribute.crud_service');
-        $attributeExists = $service->get('s_articles_attributes', 'featured_product');
+        $attributeExists = $service->get('s_articles_attributes', 'is_featured');
 
         if($attributeExists === null) {
             return;
         }
 
-        $service->delete('s_articles_attributes','featured_product');
+        $service->delete('s_articles_attributes','is_featured');
         $this->container->get('models')->generateAttributeModels(['s_articles_attributes']);
         $uninstallContext->scheduleClearCache(Plugin\Context\UninstallContext::CACHE_LIST_ALL);
     }
