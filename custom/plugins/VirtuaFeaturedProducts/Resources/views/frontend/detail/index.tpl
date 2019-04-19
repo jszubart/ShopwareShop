@@ -8,3 +8,9 @@
     {/if}
     {$smarty.block.parent}
 {/block}
+
+{block name="frontend_detail_description"}
+    {$smarty.block.parent}
+    {action module='widgets' controller='FeaturedProductsList' action='productsList'}
+{/block}
+
