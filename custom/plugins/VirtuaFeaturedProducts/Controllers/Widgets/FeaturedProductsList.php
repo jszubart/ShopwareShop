@@ -9,6 +9,10 @@ class Shopware_Controllers_Widgets_FeaturedProductsList extends Enlight_Controll
     {
         $pluginConfig = $this->container->get('shopware.plugin.cached_config_reader')->getByPluginName(self::PLUGIN_NAME);
 
+        if (!$pluginConfig['display_featured_products']) {
+            return;
+        }
+
         $modelsResource = $this->container->get('models');
         $builder = $modelsResource->createQueryBuilder();
         $articles = $builder->select('article')
@@ -17,7 +21,7 @@ class Shopware_Controllers_Widgets_FeaturedProductsList extends Enlight_Controll
             ->where('attribute.isFeatured = :isFeatured')
             ->andWhere('attribute.articleDetailId = article.mainDetailId')
             ->setParameter('isFeatured', 1)
-            ->setMaxResults($pluginConfig['products_number'])
+            ->setMaxResults($pluginConfig['number_of_products'])
             ->getQuery()
             ->getArrayResult();
 

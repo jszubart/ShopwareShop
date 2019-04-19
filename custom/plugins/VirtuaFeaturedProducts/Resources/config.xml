@@ -4,13 +4,13 @@
 
     <elements>
         <element type="boolean">
-            <name>Display Featured Products</name>
+            <name>display_featured_products</name>
             <label lang="en">Display Featured Products</label>
             <value>false</value>
             <description lang="en">Displaying featured products on detail page</description>
         </element>
         <element type="number">
-            <name>Number of Products</name>
+            <name>number_of_products</name>
             <label lang="en">Number of Products</label>
             <value>3</value>
             <description lang="en">Number of featured products on detail page</description>

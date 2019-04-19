@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../engine/Shopware/Components/Plugin/schema/config.xsd">
+
+    <elements>
+        <element type="boolean">
+            <name>HidePricesForAnonymousUsers</name>
+            <label lang="en">Hide Prices For Anonymous Users</label>
+            <value>false</value>
+            <description lang="en">Hiding prices for anonymous users</description>
+        </element>
+    </elements>
+
+</config>
