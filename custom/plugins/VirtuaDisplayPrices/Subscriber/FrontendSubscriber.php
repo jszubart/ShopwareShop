@@ -4,24 +4,37 @@ namespace VirtuaDisplayPrices\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 class FrontendSubscriber implements SubscriberInterface
+
 {
-    /**
-     * @return array
-     */
-    public static function getSubscribedEvents()
+    const PLUGIN_NAME = 'VirtuaDisplayPrices';
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
     {
-        return [
-            'Enlight_Controller_Action_PostDispatchSecure_Frontend' => 'onFrontendPostDispatch'
-        ];
+        $this->container = $container;
     }
 
-    /**
-     * @param \Enlight_Controller_ActionEventArgs $args
-     */
-    public function onFrontendPostDispatch(\Enlight_Controller_ActionEventArgs $args)
+    public static function getSubscribedEvents()
     {
-        $view = $args->getSubject()->View();
-        $view->addTemplateDir(__DIR__ . '/../Resources/views');
+        return array(
+            'Enlight_Controller_Action_PostDispatchSecure_Frontend' => 'onFrontendPricesDisplay',
+            'Enlight_Controller_Action_PostDispatchSecure_Widgets' => 'onFrontendPricesDisplay'
+        );
+    }
+
+    public function onFrontendPricesDisplay(\Enlight_Controller_ActionEventArgs $args)
+    {
+        /** @var \Enlight_Controller_Action $controller */
+        $controller = $args->getSubject();
+        $pluginConfig = $this->container->get('shopware.plugin.cached_config_reader')->getByPluginName(self::PLUGIN_NAME);
+
+        $controller->View()->addTemplateDir(__DIR__ . '/../Resources/views');
+
+        $controller->View()->assign('sUserLoggedIn', Shopware()->Session()->sUserId);
+        $controller->View()->assign('hidePrices', $pluginConfig['HidePricesForAnonymousUsers']);
+
     }
 }
