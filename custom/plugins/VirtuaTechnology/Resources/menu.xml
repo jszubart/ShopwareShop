@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/5.2/engine/Shopware/Components/Plugin/schema/menu.xsd">
+    <entries>
+        <entry>
+            <name>VirtuaTechnology</name>
+            <label lang="en">Virtua</label>
+            <controller>VirtuaTechnology</controller>
+            <action>index</action>
+            <class>sprite-computer</class>
+            <parent identifiedBy="controller">Article</parent>
+            <children>
+                <entry>
+                    <name>Technologies</name>
+                    <label lang="en">Technologies</label>
+                    <controller>VirtuaTechnology</controller>
+                    <action>detail</action>
+                    <class>sprite-terminal-protector</class>
+                </entry>
+            </children>
+        </entry>
+    </entries>
+</menu>
