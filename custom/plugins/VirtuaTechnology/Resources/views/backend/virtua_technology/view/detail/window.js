@@ -12,5 +12,5 @@ Ext.define('Shopware.apps.VirtuaTechnology.view.detail.Window', {
         fieldLabel: '{s name=picture}Image{/s}',
         valueField: 'path',
         allowBlank: false,
-    }, //url empty
+    },
 });

@@ -14,6 +14,17 @@ use VirtuaTechnology\Models\Technology;
  */
 class VirtuaTechnology extends Plugin
 {
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            'Shopware_Controllers_Seo_filterCounts' => 'addTechnologyCount',
+            'Shopware_CronJob_RefreshSeoIndex_CreateRewriteTable' => 'createTechnologyRewriteTable',
+            'sRewriteTable::sCreateRewriteTable::replace' => 'createTechnologyRewriteTable',
+            'Shopware_Components_RewriteGenerator_FilterQuery' => 'filterParameterQuery'
+        );
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -37,7 +48,10 @@ class VirtuaTechnology extends Plugin
         if (!$uninstallContext->keepUserData()) {
             $this->removeDatabase();
         }
-
+        $dbalConnection = $this->container->get('dbal_connection');
+        $dbalConnection->exec(
+            "DELETE FROM s_core_rewrite_urls WHERE path LIKE 'technologies/%' "
+        );
     }
 
     private function createDatabase()
@@ -70,4 +84,58 @@ class VirtuaTechnology extends Plugin
             $modelManager->getClassMetadata(Technology::class)
         ];
     }
+
+    public function createTechnologyRewriteTable()
+    {
+        /** @var \sRewriteTable $rewriteTableModule */
+        $rewriteTableModule = Shopware()->Container()->get('modules')->sRewriteTable();
+        $rewriteTableModule->sInsertUrl('sViewport=technologies', 'technologies/');
+
+        /** @var QueryBuilder $dbalQueryBuilder */
+        $dbalQueryBuilder = Shopware()->Container()->get('dbal_connection')->createQueryBuilder();
+        $urls = $dbalQueryBuilder->select('technology.id, technology.url')
+            ->from('virtua_technology', 'technology')
+            ->execute()
+            ->fetchAll(\PDO::FETCH_KEY_PAIR);
+
+        foreach ($urls as $id => $url) {
+            $rewriteTableModule->sInsertUrl('sViewport=technologies&sAction=detail&technologyId=' . $id, 'technologies/' . $url);
+        }
+    }
+
+    /**
+     * @param \Enlight_Event_EventArgs $args
+     * @return mixed
+     */
+    public function filterParameterQuery(\Enlight_Event_EventArgs $args)
+    {
+        $orgQuery = $args->getReturn();
+        $query = $args->getQuery();
+
+        if ($query['controller'] === 'technologies' && isset($query['technologyId'])) {
+            $orgQuery['technologyId'] = $query['technologyId'];
+        }
+
+        return $orgQuery;
+    }
+
+    /**
+     * @param \Enlight_Event_EventArgs $args
+     * @return mixed
+     */
+    public function addTechnologyCount(\Enlight_Event_EventArgs $args)
+    {
+        $counts = $args->getReturn();
+        /** @var QueryBuilder $dbalQueryBuilder */
+        $dbalQueryBuilder = Shopware()->Container()->get('dbal_connection')->createQueryBuilder();
+        $technologyCount = $dbalQueryBuilder->select('COUNT(technologies.id)')
+            ->from('virtua_technology', 'technologies')
+            ->execute()
+            ->fetchAll(\PDO::FETCH_COLUMN);
+
+        $counts['technologies'] = $technologyCount;
+
+        return $counts;
+    }
+
 }
