@@ -15,6 +15,7 @@ class Shopware_Controllers_Frontend_Technologies extends Enlight_Controller_Acti
         $technologies = $queryBuilder->select('technologies.name, technologies.url, technologies.logo, image.path as logo')
             ->from('virtua_technology', 'technologies')
             ->leftJoin('technologies', 's_media', 'image','technologies.logo = image.id')
+            ->setMaxResults(20)
             ->execute()
             ->fetchAll();
 
@@ -23,12 +24,12 @@ class Shopware_Controllers_Frontend_Technologies extends Enlight_Controller_Acti
 
     public function detailAction()
     {
-        $technologyId = $this->Request()->getParam('id');
+        $technologyId = $this->Request()->getParam('technologyId');
 
         /** @var \Doctrine\DBAL\Query\QueryBuilder $queryBuilder */
         $queryBuilder = $this->container->get('dbal_connection')->createQueryBuilder();
 
-        $technology = $queryBuilder->select('technologies.id, technologies.url, technologies.description, technologies.logo, image.path as logo')
+        $technology = $queryBuilder->select('technologies.id, technologies.name, technologies.description, technologies.logo, image.path as logo')
             ->from('virtua_technology', 'technologies')
             ->leftJoin('technologies', 's_media', 'image','technologies.logo = image.id')
             ->where('technologies.id = :id')
@@ -36,6 +37,6 @@ class Shopware_Controllers_Frontend_Technologies extends Enlight_Controller_Acti
             ->execute()
             ->fetch();
 
-        $this->View()->assign($technology);
+        $this->View()->assign('technology', $technology);
     }
 }

@@ -10,7 +10,7 @@ Ext.define('Shopware.apps.VirtuaTechnology.view.detail.Container', {
                 title: 'Technology Data',
                 fields: {
                     name: {},
-                    description: {}
+                    description: this.createDescription,
                 }
             }, {
                 title: 'Technology logo',
@@ -21,4 +21,10 @@ Ext.define('Shopware.apps.VirtuaTechnology.view.detail.Container', {
             }]
         };
     },
+    createDescription: function(model, formField) {
+        formField.xtype = 'textarea';
+        formField.height = 90;
+        formField.grow = true;
+        return formField;
+    }
 });
