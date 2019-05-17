@@ -10,7 +10,7 @@ class TechnologySubscriber implements SubscriberInterface
     {
         return array(
             'Enlight_Controller_Action_PostDispatchSecure_Backend_VirtuaTechnology' => 'virtuaTechnologyBackendDisplay',
-            'Enlight_Controller_Action_PostDispatchSecure_Frontend_Technologies' => 'virtuaTechnologyFrontendDisplay',
+            'Enlight_Controller_Action_PostDispatchSecure_Frontend' => 'virtuaTechnologyFrontendDisplay',
         );
     }
 

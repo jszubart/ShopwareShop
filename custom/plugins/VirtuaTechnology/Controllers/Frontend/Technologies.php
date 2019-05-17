@@ -1,6 +1,6 @@
 <?php
 
-
+use Doctrine\DBAL\Connection;
 /**
  * Class Technologies controller
  */
@@ -38,5 +38,29 @@ class Shopware_Controllers_Frontend_Technologies extends Enlight_Controller_Acti
             ->fetch();
 
         $this->View()->assign('technology', $technology);
+    }
+
+    public function technologiesListAction()
+    {
+        $numbers = $this->Request()->getParam('numbers');
+        if (is_string($numbers)) {
+            $numbers = array_filter(explode('|', $numbers));
+        }
+        $queryBuilder = $this->container->get('dbal_connection')->createQueryBuilder();
+
+        if (!is_array($numbers)) {
+            return;
+        }
+
+        $technologies = $queryBuilder->select('technologies.id, technologies.name, technologies.url, technologies.description, technologies.logo, image.path as logo')
+            ->from('virtua_technology', 'technologies')
+            ->leftJoin('technologies', 's_media', 'image','technologies.logo = image.id')
+            ->where('technologies.id IN (:ids)')
+            ->setParameter(':ids', $numbers, Connection::PARAM_INT_ARRAY)
+            ->execute()
+            ->fetchAll(PDO::FETCH_ASSOC);
+
+        $this->View()->assign('technologies', $technologies);
+
     }
 }

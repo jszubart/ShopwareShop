@@ -31,6 +31,25 @@ class VirtuaTechnology extends Plugin
     public function install(InstallContext $installContext)
     {
         $this->createDatabase();
+
+        $service = $this->container->get('shopware_attribute.crud_service');
+
+        $em = $this->container->get('models');
+        $schemaTool = new SchemaTool($em);
+        $schemaTool->updateSchema(
+            [ $em->getClassMetadata(Technology::class) ],
+            true
+        );
+
+        $service->update('s_articles_attributes', 'technology', 'multi_selection', [
+            'entity' => Technology::class,
+            'displayInBackend' => true,
+            'label' => 'Technology',
+            'custom' => true
+        ], null , true);
+
+        $this->container->get('models')->generateAttributeModels(['s_articles_attributes']);
+        $installContext->scheduleClearCache(Plugin\Context\InstallContext::CACHE_LIST_ALL);
     }
 
     public function activate(ActivateContext $activateContext)
@@ -52,6 +71,17 @@ class VirtuaTechnology extends Plugin
         $dbalConnection->exec(
             "DELETE FROM s_core_rewrite_urls WHERE path LIKE 'technologies/%' "
         );
+
+        $service = $this->container->get('shopware_attribute.crud_service');
+        $attributeExists = $service->get('s_articles_attributes', 'technology');
+
+        if($attributeExists === null) {
+            return;
+        }
+
+        $service->delete('s_articles_attributes','technology');
+        $this->container->get('models')->generateAttributeModels(['s_articles_attributes']);
+        $uninstallContext->scheduleClearCache(Plugin\Context\UninstallContext::CACHE_LIST_ALL);
     }
 
     private function createDatabase()
