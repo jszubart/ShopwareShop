@@ -26,7 +26,7 @@
         <p class="delivery--information">
             <span class="delivery--text delivery--text-available">
                 <i class="delivery--status-icon delivery--status-available"></i>
-                    Estimated delivery day - {$shippingDate}
+                    Estimated delivery day - {$shippingDate|date:"DATE_SHORT"}
             </span>
         </p>
     </div>
