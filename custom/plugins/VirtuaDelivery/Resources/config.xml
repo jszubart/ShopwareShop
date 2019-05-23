@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../engine/Shopware/Components/Plugin/schema/config.xsd">
+
+    <elements>
+        <element type="combo" required="true">
+            <name>NotShipping</name>
+            <label lang="en">Not Shipping</label>
+            <value>Days of the week in which shipping is blocked</value>
+            <store>
+                <option>
+                    <value>Monday</value>
+                    <label lang="en">Monday</label>
+                </option>
+                <option>
+                    <value>Tuesday</value>
+                    <label lang="en">Tuesday</label>
+                </option>
+                <option>
+                    <value>Wednesday</value>
+                    <label lang="en">Wednesday</label>
+                </option>
+                <option>
+                    <value>Thursday</value>
+                    <label lang="en">Thursday</label>
+                </option>
+                <option>
+                    <value>Friday</value>
+                    <label lang="en">Friday</label>
+                </option>
+                <option>
+                    <value>Saturday</value>
+                    <label lang="en">Saturday</label>
+                </option>
+                <option>
+                    <value>Sunday</value>
+                    <label lang="en">Sunday</label>
+                </option>
+            </store>
+            <options>
+                <multiSelect>true</multiSelect>
+            </options>
+        </element>
+        <element type="time" required="true">
+            <name>ShipsUntil</name>
+            <label lang="en">Ships Untill</label>
+        </element>
+        <element type="date" required="true">
+            <name>HolidaysBegin</name>
+            <label lang="en">Holidays begin</label>
+        </element>
+        <element type="date" required="true">
+            <name>HolidaysEnd</name>
+            <label lang="en">Holidays end</label>
+        </element>
+    </elements>
+
+</config>
